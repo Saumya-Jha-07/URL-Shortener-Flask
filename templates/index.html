@@ -9,7 +9,7 @@
   <body>
     <div class="h-screen w-screen bg-neutral-400 p-6">
       <h1 class="text-blue-500 font-semibold text-[32px] text-center">
-        Python URL Shortener
+         URL Shortener
       </h1>
 
       <div
@@ -50,13 +50,15 @@
           </thead>
           <tbody>
             {% for url in all_urls %}
-            <tr class="hover:bg-gray-50">
+            {% if url[1] == most_visited_site[0] %}
+            <tr class="bg-gray-200">
               <td class="py-2 px-4 text-gray-700">{{url[0]}}</td>
               <td class="py-2 px-4 font-medium">
                 <a
                   href="{{ url[1] }}"
                   class="text-blue-500 underline"
                   target="_blank"
+                  title = "{{url[0]}}"
                 >
                   {{ url[1] }}
                 </a>
@@ -75,10 +77,51 @@
                 </form>
               </td>
             </tr>
+            {%else%}
+            <tr class="hover:bg-gray-50">
+              <td class="py-2 px-4 text-gray-700">{{url[0]}}</td>
+              <td class="py-2 px-4 font-medium">
+                <a
+                  href="{{ url[1] }}"
+                  class="text-blue-500 underline"
+                  target="_blank"
+                  title = "{{url[0]}}"
+                >
+                  {{ url[1] }}
+                </a>
+                
+              </td>
+              <td class="py-2 px-4 text-center font-medium">{{url[2]}}</td>
+              <td>
+                <form method="POST" action="/delete">
+                  <input type="hidden" name="short_code" value="{{ url[1] }}" />
+                  <button
+                    type="submit"
+                    class="bg-red-500 text-white px-4 py-1 rounded hover:bg-red-600"
+                  >
+                    Delete
+                  </button>
+                </form>
+              </td>
+            </tr>
+            {% endif %}
             {% endfor %}
           </tbody>
         </table>
       </div>
+
+      <div class="bg-white w-[770px] h-[80px] mx-auto my-6 flex  gap-10 gapx-10">
+        <div class="relative top-5 left-10 border-2 border-slate-500 rounded-lg w-[135px] h-[50px] px-4 py-2.5">
+          Total urls = {{len_all_urls}}
+        </div>
+        <div class="relative top-5 left-10 border-2 border-slate-500 rounded-lg w-[145px] h-[50px] px-4 py-2.5">
+          Total visits = {{total_visits}}
+        </div>
+        <div class="relative top-5 left-20 border-2 border-slate-500 rounded-lg w-[240px] h-[50px] px-5 py-2.5">
+          Most visited site = {{most_visited_site[0]}}
+        </div>
+      </div>
+
     </div>
   </body>
 </html>

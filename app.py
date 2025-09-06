@@ -26,7 +26,7 @@ def home():
         return redirect("/")
     
     all_urls = get_all_urls()
-    return render_template("index.html" , all_urls=all_urls)
+    return render_template("index.html" , all_urls=all_urls , len_all_urls = len(all_urls ) , total_visits = sum(url[2] for url in all_urls) , most_visited_site = [url[1] for url in all_urls if url[2] == max(url[2] for url in all_urls)])
 
 @app.route("/delete", methods=["POST"])
 def delete():
