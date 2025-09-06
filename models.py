@@ -25,7 +25,7 @@ def insert_url(full_url , short_code):
 def get_url(short_code):
     with sqlite3.connect(DB_NAME) as conn:
         cur = conn.execute('''
-                SELECT * FROM urls 
+                SELECT original_url FROM urls 
                      WHERE shorten_url = ? 
         ''' , (short_code, ))
         return cur.fetchone()

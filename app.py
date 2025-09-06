@@ -36,11 +36,14 @@ def delete():
 
 @app.route("/<short_code>")
 def increment_visit(short_code):
-    original_url = get_url(short_code)
+    print("Short code clicked:", short_code)
+    original_url = get_url(short_code)[0]
+    print("Original URL:", original_url)
     if original_url:
         increment_visit_count(short_code)
         return redirect(original_url)
     return "Short url not found ❌"
 
+
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
