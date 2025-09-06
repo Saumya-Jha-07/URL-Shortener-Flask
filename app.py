@@ -24,9 +24,23 @@ def home():
         short_code = generate_short_code()
         insert_url(original_url,short_code)
         return redirect("/")
-
+    
     all_urls = get_all_urls()
     return render_template("index.html" , all_urls=all_urls)
+
+@app.route("/delete", methods=["POST"])
+def delete():
+    short_code = request.form["short_code"]
+    delete_url(short_code)   # your DB function
+    return redirect("/")
+
+@app.route("/<short_code>")
+def increment_visit(short_code):
+    original_url = get_url(short_code)
+    if original_url:
+        increment_visit_count(short_code)
+        return redirect(original_url)
+    return "Short url not found ❌"
 
 if __name__ == "__main__":
     app.run()

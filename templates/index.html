@@ -45,13 +45,14 @@
               <th class="py-2 px-4">Original URL</th>
               <th class="py-2 px-4">Shortened URL</th>
               <th class="py-2 px-4 text-center">Visits</th>
+              <th class="py-2 px-4 text-center"></th>
             </tr>
           </thead>
           <tbody>
             {% for url in all_urls %}
             <tr class="hover:bg-gray-50">
               <td class="py-2 px-4 text-gray-700">{{url[0]}}</td>
-              <td class="py-2 px-4  font-medium">
+              <td class="py-2 px-4 font-medium">
                 {% if url[0][:5] == "https" %}
                 <a
                   href="{{ url[0] }}"
@@ -71,6 +72,17 @@
                 {% endif %}
               </td>
               <td class="py-2 px-4 text-center font-medium">{{url[2]}}</td>
+              <td>
+                <form method="POST" action="/delete">
+                  <input type="hidden" name="short_code" value="{{ url[1] }}" />
+                  <button
+                    type="submit"
+                    class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
+                  >
+                    Delete
+                  </button>
+                </form>
+              </td>
             </tr>
             {% endfor %}
           </tbody>
